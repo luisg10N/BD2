@@ -1,0 +1,172 @@
+select * from employees;
+select * from offices;
+
+##Mostra Funcionários que trabalham em um escritorio
+select o.city, e.employeeNumber, e.firstName from employees e
+	INNER JOIN 
+		offices o 
+			on e.officeCode = o.officeCode;
+
+##Mostra funcionarios nas cidade em ordem alfabética -invertida  
+select o.city, e.employeeNumber, e.firstName from employees e
+	INNER JOIN 
+		offices o 
+			on e.officeCode = o.officeCode order by city desc;
+            
+##Mostra funcionarios nas cidade em ordem alfabética  
+select o.city, e.employeeNumber, e.firstName from employees e
+	INNER JOIN 
+		offices o 
+			on e.officeCode = o.officeCode order by city asc;
+            
+##Mostra funcionários em ordem alfabética por cidade   
+select e.firstName, e.employeeNumber, o.city from employees e
+	INNER JOIN 
+		offices o 
+			on e.officeCode = o.officeCode order by firstName asc;
+
+##Mostra funcionários ordem decrescente por numero do empregado           
+select o.city, e.employeeNumber, e.firstName from employees e
+	INNER JOIN 
+		offices o 
+			on e.officeCode = o.officeCode order by employeeNumber desc;
+                        
+select * from offices; 
+insert  into `offices`(`officeCode`,`city`,`phone`,`addressLine1`,`addressLine2`,`state`,`country`,`postalCode`,`territory`) 
+	values(8, 'Guarulhos', '+55 11 12345678', 'Av. Salgado Filho, 3501', '','SP', 'Brasil', '02145' , 'Brasil');
+    
+insert  into `offices`(`officeCode`,`city`,`phone`,`addressLine1`,`addressLine2`,`state`,`country`,`postalCode`,`territory`) 
+	values(9, 'Sao Paulo', '+55 11 12345678', 'Rua Pedro Vicente, 625', '','SP', 'Brasil', '06000' , 'Brasil');
+            		
+##Mostra todos os escritórios com funcionários      
+select o.city, e.employeeNumber, e.firstName from employees e
+	LEFT JOIN 
+		offices o 
+			on e.officeCode = o.officeCode  order by employeeNumber desc;
+
+##Mostra todos os escritorios com e sem funcionarios
+select o.city, e.employeeNumber, e.firstName from employees e
+	RIGHT JOIN 
+		offices o 
+			on e.officeCode = o.officeCode  order by employeeNumber desc;
+                        
+select o.city, e.employeeNumber, e.firstName from employees e
+	INNER JOIN 
+		offices o 
+			on e.officeCode = o.officeCode  order by employeeNumber desc;
+ 
+##Mostra numero de empregados somente nos escritorios que possuem empregados
+select o.city, o.officeCode, count(e.employeeNumber) as
+	'numero de empregados' from employees e
+	INNER JOIN
+		offices o
+			on e.officeCode = o.officeCode  group by o.officeCode;
+            
+##Mostra numero de empregados em todos os escritorios sejam eles com ou sem empregados
+select o.city, o.officeCode, count(e.employeeNumber) as
+	'numero de empregados' from employees e
+	RIGHT JOIN
+		offices o
+			on e.officeCode = o.officeCode  group by o.officeCode;
+
+##Mostra o numero do cliente, o numero do check e a quantidade máxima            
+SELECT
+	customerNumber,
+    checkNumber,
+    amount
+FROM
+    payments
+WHERE
+    amount = (SELECT max(amount) FROM payments);
+    
+select * from customers;
+select * from offices;
+
+##Mostra os clientes por escritório com o numero do cliente ordenado de forma crescente
+select o.city, c.customerNumber, c.customerName from customers c
+	INNER JOIN 
+		offices o order by customerNumber asc;
+        
+##Mostra os clientes por escritório com o numero do cliente ordenado de forma decrescente
+select o.city, c.customerNumber, c.customerName from customers c
+	INNER JOIN 
+		offices o order by customerNumber desc;
+        
+##Mostra os clientes por escritório com as cidades em ordem alfabética 
+select o.city, c.customerNumber, c.customerName from customers c
+	INNER JOIN 
+		offices o order by city asc;
+        
+##Mostra os clientes por escritório com as cidades em ordem alfabética-invertida 
+select o.city, c.customerNumber, c.customerName from customers c
+	INNER JOIN 
+		offices o order by city desc;
+
+select * from payments;
+select * from offices;
+
+##Mostra pagamentos por escritorios com as cidades em ordem alfabetica
+select o.city, p.customerNumber, p.checkNumber from payments p
+	INNER JOIN 
+		offices o order by city asc;
+        
+##Mostra pagamentos por escritorios com as cidades em ordem alfabética-invertida 
+select o.city, p.customerNumber, p.checkNumber from payments p
+	INNER JOIN 
+		offices o order by city desc;
+        
+##Mostra pagamentos por escritorios com os valores em ordem crescente
+select o.city, p.amount, p.customerNumber from payments p
+	INNER JOIN 
+		offices o order by amount asc;
+        
+##Mostra produtos por escritorios com as cidades em ordem alfabética
+select o.city, p1.productName, p1.quantityInStock from products p1
+	INNER JOIN 
+		offices o order by city asc;
+        
+##Mostra produtos por escritorios com as cidades em ordem alfabética-invertida
+select o.city, p1.productName, p1.quantityInStock from products p1
+	INNER JOIN 
+		offices o order by city asc;
+        
+##Mostra produtos por escritorios com a quantidade em estoque em ordem crescente        
+select o.city, p1.productName, p1.quantityInStock from products p1
+	INNER JOIN 
+		offices o order by quantityInStock asc;
+        
+##Mostra produtos por escritorios com a quantidade em estoque em ordem decrescente      
+select o.city, p1.productName, p1.quantityInStock from products p1
+	INNER JOIN 
+		offices o order by quantityInStock desc;
+        
+##Mostra produtos por escritorios com o nome do produto em ordem alfabética      
+select o.city, p1.productName, p1.quantityInStock from products p1
+	INNER JOIN 
+		offices o order by productName asc;
+        
+##Mostra produtos por escritorios com o nome do produto em ordem alfabética-invertida     
+select o.city, p1.productName, p1.quantityInStock from products p1
+	INNER JOIN 
+		offices o order by productName desc;
+        
+##Mostra linha do produto em ordem alfabética e suas imagens
+select productLine, image from productlines order by productLine asc;
+
+##Mostra linha do produto em ordem alfabética-invertida e suas imagens
+select productLine, image from productlines order by productLine desc;
+
+##Mostra linha do produto em ordem alfabética e sua descrição de texto
+select productLine, textDescription from productlines order by productLine asc;
+
+##Mostra linha do produto em ordem alfabética-invertida e sua descrição de texto
+select productLine, textDescription from productlines order by productLine desc;
+
+##Mostra codigo do produto em ordem crescente e seu nome
+select productCode, productName from products order by productCode asc;
+
+##Mostra codigo do produto em ordem decrescente e seu nome
+select productCode, productName from products order by productCode desc;
+
+##Mostra nome do produto em ordem crescente e seu codigo
+select productName, productCode from products order by productName asc;
